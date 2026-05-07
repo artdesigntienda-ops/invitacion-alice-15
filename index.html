@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación 15 Años - Alice Rodríguez Cuaces</title>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Mulish:wght@300;400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 1. SISTEMA DE DOBLE VIDEO DE FONDO -->
+    <div class="background-system">
+        <video id="video-intro" src="assets/fondo_pantalla_principal.mp4" muted playsinline class="bg-video"></video>
+        <video id="video-card" src="assets/particulas_brillando2.mp4" autoplay muted loop playsinline class="bg-video"
+            style="opacity: 0;"></video>
+        <div class="video-overlay"></div>
+        <canvas id="sparkles-canvas"></canvas>
+    </div>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Audio Element (vals.mp3) -->
+        <audio id="background-music" src="assets/vals.mp3" preload="auto"></audio>
+
+        <!-- PANTALLA INICIAL (Solo Texto) -->
+        <div class="initial-scene" id="initial-scene">
+            <div class="envelope-wrapper" id="envelope-wrapper" style="cursor: pointer;">
+                <p class="click-instruction mulish" id="vid-instruction">Haz clic para abrir la invitación</p>
+            </div>
+        </div>
+
+        <!-- 2. LA TARJETA (.card) -->
+        <div class="card-container" id="card-container">
+            <div class="invitation-card single-layout">
+
+
+                <!-- 5. CONTENIDO DE LA TARJETA (Texto Dorado) -->
+                <div class="card-content">
+                    <div class="content-wrapper">
+                        <!-- 1. ENCABEZADO -->
+                        <div class="section-top">
+                            <h2 class="dancing-script anim-text subtitle">Mis 15 años</h2>
+                            <h1 class="dancing-script anim-text main-title">Alice Rodriguez Cuaces</h1>
+                        </div>
+
+                        <!-- 2. PADRES Y FAMILIA -->
+                        <div class="family-section dancing-script anim-text">
+                            <p class="label-gold">MIS PADRES </p>
+                            <p>Jaison Rodriguez </p>
+                            <p>Danitza Cuaces Erazo </p>
+                            <p class="label-gold mt-2">Y MI ABUELA </p>
+                            <p>Adriana Erazo</p>
+                        </div>
+
+                        <!-- 3. MENSAJE DE AGRADECIMIENTO -->
+                        <div class="gratitude-message dancing-script anim-text">
+                            <p>Este sera un día muy especial, en el cual </p>
+                            <p>Quiero dar gracias a Dios por permitirme </p>
+                            <p>Estar hoy presente. </p>
+                            <p>A mis padres, abuela, amigos y demás familiares </p>
+                            <p>Por verme crecer y acompañarme en </p>
+                            <p>Esta etapa de mi vida. </p>
+                            <p>Los días especiales son inolvidables y únicos </p>
+                            <p>Por eso quiero que formes parte de esos recuerdos. </p>
+                            <p>Acompáñanos a celebrar este día </p>
+                            <p>tan importante para mí.</p>
+                        </div>
+
+                        <!-- 4. FECHA Y HORA -->
+                        <div class="event-details dancing-script anim-text">
+                            <h3 class="label-gold">VIERNES</h3>
+                            <p class="date-large">5 de junio</p>
+                            <p>7:00 pm</p>
+                        </div>
+
+                        <!-- 5. LUGAR -->
+                        <div class="location-section dancing-script anim-text">
+                            <h3 class="label-gold">LUGAR</h3>
+                            <p>Salón Marquez</p>
+                            <p>Cra 14 # 14 - 55</p>
+                            <p>Av Champagnat</p>
+                        </div>
+
+                        <!-- 6. CÓDIGO DE VESTIMENTA -->
+                        <div class="dress-code dancing-script anim-text">
+                            <h3 class="label-gold">CÓDIGO DE VESTIMENTA</h3>
+                            <p>Formal</p>
+                            <p class="label-gold mt-2">SE RESERVA EL COLOR NEGRO Y DORADO PARA LA 15AÑERA</p>
+                        </div>
+
+                        <!-- 7. BOTONES INTERACTIVOS -->
+                        <div class="interactive-footer" id="interactive-footer">
+                            <div class="footer-row">
+                                <button
+                                    onclick="window.open('https://api.whatsapp.com/send?phone=3162206441&text=Cuenta%20con%20mi%20asistencia.')"
+                                    class="btn-interact dancing-script">Confirmar Asistencia</button>
+                                <button onclick="window.open('https://maps.app.goo.gl/m6qcDnk4PuZe83Re8')"
+                                    class="btn-interact dancing-script">Ver Ubicación</button>
+                                <div id="countdown" class="dancing-script"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,561 @@
+/* 
+    Alice 15 Años - Diseño Gala Mejorado
+    Senior Front-end Expert
+*/
+
+:root {
+    --gold: #D4AF37;
+    --gold-light: #F5D97A;
+    --gold-glow: rgba(212, 175, 55, 0.7);
+    --text-shadow:
+        0 0 6px rgba(255, 255, 255, 1),
+        0 0 14px rgba(255, 255, 255, 0.9),
+        0 0 28px rgba(255, 255, 255, 0.6),
+        0 0 50px rgba(255, 255, 255, 0.3);
+    --gold-outline: 1.4px var(--gold);
+    --black-text: #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+body {
+    background-color: #000;
+    color: var(--black-text);
+    overflow-x: hidden;
+    min-height: 100vh;
+    font-family: 'Dancing Script', cursive; /* Fuente unificada */
+}
+
+.dancing-script {
+    font-family: 'Dancing Script', cursive;
+}
+
+.mulish {
+    font-family: 'Mulish', sans-serif;
+}
+
+/* --- 1. SISTEMA DE DOBLE VIDEO DE FONDO --- */
+.background-system {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+}
+
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    transition: opacity 2s ease;
+}
+
+#video-intro,
+#video-card {
+    object-fit: contain;
+    background-color: #000;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+}
+
+/* --- CANVAS DE PARTÍCULAS (z-index 3: encima del video, debajo del texto) --- */
+#sparkles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    pointer-events: auto;
+    cursor: none;
+    /* cursor personalizado con partículas */
+}
+
+/* --- CONTAINER --- */
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    z-index: 10;
+}
+
+/* --- PANTALLA DEL SOBRE --- */
+.initial-scene {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1.5s ease;
+    z-index: 10;
+}
+
+.envelope-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: calc(100vh * 9 / 16);
+    text-align: center;
+}
+
+.click-instruction {
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    font-size: 1.9rem;
+    font-weight: 900;
+    color: var(--black-text);
+    -webkit-text-stroke: var(--gold-outline);
+    text-shadow: var(--text-shadow);
+    margin-top: 20px;
+    animation: pulse 2s infinite;
+    transition: opacity 0.8s ease;
+    word-spacing: 4px;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes goldGlow {
+
+    0%,
+    100% {
+        text-shadow:
+            0 0 6px rgba(255, 255, 255, 1),
+            0 0 14px rgba(255, 255, 255, 0.9),
+            0 0 28px rgba(255, 255, 255, 0.6),
+            0 0 50px rgba(212, 175, 55, 0.5);
+    }
+
+    50% {
+        text-shadow:
+            0 0 10px rgba(255, 255, 255, 1),
+            0 0 22px rgba(255, 255, 255, 0.95),
+            0 0 40px rgba(255, 255, 255, 0.7),
+            0 0 70px rgba(212, 175, 55, 0.8),
+            0 0 90px rgba(212, 175, 55, 0.4);
+    }
+}
+
+.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* --- 2. LA TARJETA --- */
+.card-container {
+    width: 95vw;
+    max-width: calc(100vh * 9 / 16);
+    min-height: 85vh;
+    display: none;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all 1.5s cubic-bezier(0.2, 1, 0.3, 1);
+    z-index: 10;
+    margin: 20px auto;
+}
+
+.card-container.visible {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.invitation-card {
+    position: relative;
+    width: 100%;
+    min-height: 85vh;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Reducido padding para ganar espacio */
+    overflow: visible; /* Permitir que el brillo y texto respiren */
+}
+
+/* CONTENIDO DE LA TARJETA */
+.card-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+}
+
+.content-wrapper {
+    text-align: center;
+    max-width: 700px;
+    padding: 0 16px;
+}
+
+.subtitle {
+    font-size: 5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: var(--text-shadow);
+    -webkit-text-stroke: var(--gold-outline);
+    color: var(--black-text);
+    animation: goldGlow 3s ease-in-out infinite;
+    word-spacing: 6px;
+    letter-spacing: 2px;
+}
+
+.main-title {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+    text-shadow: var(--text-shadow);
+    letter-spacing: 3px;
+    word-spacing: 6px;
+    -webkit-text-stroke: var(--gold-outline);
+    color: var(--black-text);
+    animation: goldGlow 3s ease-in-out infinite;
+}
+
+.phrase {
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 2;
+    margin-bottom: 3rem;
+    word-spacing: 3px;
+    letter-spacing: 0.5px;
+}
+
+.info-section p {
+    margin: 1.2rem 0;
+    font-size: 1.2rem;
+    word-spacing: 3px;
+    letter-spacing: 0.5px;
+    line-height: 1.8;
+}
+
+.protocol {
+    margin-top: 3rem;
+    font-size: 1rem;
+    opacity: 0.85;
+    word-spacing: 3px;
+    letter-spacing: 0.5px;
+    line-height: 1.9;
+}
+
+/* ETIQUETAS DORADAS — sin cortes, con espacio correcto */
+.label-gold {
+    color: var(--black-text);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    word-spacing: 8px;
+    margin-bottom: 0.8rem;
+    text-shadow: var(--text-shadow);
+    -webkit-text-stroke: var(--gold-outline);
+    font-size: 2.2rem; /* Aumentado para que parezca un subtítulo */
+    display: block;
+    line-height: 1.2;
+    animation: goldGlow 3s ease-in-out infinite;
+    padding: 10px 0;
+}
+
+.family-section,
+.gratitude-message,
+.event-details,
+.location-section,
+.dress-code {
+    margin-bottom: 2rem; /* Reducido para compactar */
+    line-height: 1.4; /* Interlineado más cerrado */
+    padding: 0 10px;
+}
+
+.gratitude-message p {
+    font-size: 1.8rem; /* Aumentado +5px aprox */
+    margin: 0.8rem 0;
+    word-spacing: 4px;
+    letter-spacing: 0.5px;
+}
+
+.date-large {
+    font-size: 2.6rem;
+    font-weight: 900;
+    color: var(--black-text);
+    text-shadow: var(--text-shadow);
+    -webkit-text-stroke: var(--gold-outline);
+    word-spacing: 6px;
+    letter-spacing: 2px;
+    animation: goldGlow 3s ease-in-out infinite;
+    display: block;
+    padding: 2px 0;
+}
+
+.dress-note {
+    font-style: italic;
+    font-size: 0.95rem;
+    opacity: 0.9;
+    margin-top: 0.6rem;
+    max-width: 340px;
+    line-height: 1.8;
+    word-spacing: 3px;
+}
+
+.mt-2 {
+    margin-top: 1rem;
+}
+
+/* =============================================
+   TÍTULOS PRINCIPALES — protagonismo máximo
+   ============================================= */
+
+/* "Mis 15 Años" — un poco más pequeño para dar paso al nombre */
+.subtitle {
+    font-size: 3.2rem !important;
+    line-height: 1.1 !important;
+    margin-bottom: 0.2rem !important;
+    letter-spacing: 3px !important;
+    word-spacing: 6px !important;
+    display: block;
+    padding: 4px 0;
+}
+
+/* "Alice Rodriguez Cuaces" — el nombre con el tamaño máximo */
+.main-title {
+    font-size: 4.8rem !important;
+    line-height: 1.1 !important;
+    margin-bottom: 2rem !important;
+    letter-spacing: 2px !important;
+    word-spacing: 6px !important;
+    display: block;
+    padding: 10px 0;
+    /* Brillo más intenso en el nombre */
+    text-shadow:
+        0 0 10px rgba(255, 255, 255, 1),
+        0 0 20px rgba(255, 255, 255, 0.95),
+        0 0 40px rgba(255, 255, 255, 0.8),
+        0 0 70px rgba(212, 175, 55, 0.7),
+        0 0 100px rgba(212, 175, 55, 0.4) !important;
+    animation: nameShine 2.5s ease-in-out infinite !important;
+}
+
+@keyframes nameShine {
+
+    0%,
+    100% {
+        text-shadow:
+            0 0 8px rgba(255, 255, 255, 1),
+            0 0 18px rgba(255, 255, 255, 0.95),
+            0 0 35px rgba(255, 255, 255, 0.8),
+            0 0 60px rgba(212, 175, 55, 0.7);
+        -webkit-text-stroke: 1.5px var(--gold);
+    }
+
+    50% {
+        text-shadow:
+            0 0 12px rgba(255, 255, 255, 1),
+            0 0 28px rgba(255, 255, 255, 1),
+            0 0 55px rgba(255, 255, 255, 0.9),
+            0 0 90px rgba(212, 175, 55, 0.9),
+            0 0 120px rgba(245, 217, 122, 0.5);
+        -webkit-text-stroke: 2px var(--gold-light);
+    }
+}
+
+/* Separador decorativo entre título y nombre */
+.title-divider {
+    display: block;
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 0.5rem auto 1.2rem;
+    box-shadow: 0 0 8px var(--gold-glow);
+}
+
+/* =============================================
+   EFECTO MANUSCRITO — por PALABRAS (no letras)
+   ============================================= */
+.anim-text {
+    opacity: 0;
+    display: block;
+    padding: 2px 0;
+    word-break: normal;
+    overflow-wrap: break-word;
+    white-space: normal;
+    line-height: 1.3; /* Espacio entre renglones de cada párrafo */
+}
+
+/* Cada token (palabra o espacio) es inline — NO inline-block para no romper flujo */
+.hw-word {
+    display: inline;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: pre;
+    /* preserva espacios exactos del token */
+}
+
+.hw-word.visible {
+    opacity: 1;
+
+    /* Negro con borde dorado y brillo blanco */
+    color: var(--black-text);
+    -webkit-text-stroke: 0.8px var(--gold);
+    text-shadow:
+        0 0 5px rgba(255, 255, 255, 1),
+        0 0 12px rgba(255, 255, 255, 0.9),
+        0 0 25px rgba(255, 255, 255, 0.6),
+        0 0 45px rgba(212, 175, 55, 0.5);
+
+    font-size: 1.6rem; /* Aumentado +5px aprox */
+    /* hereda del padre en lugar de forzar tamaño */
+    font-weight: 700;
+
+    animation: wordReveal 0.4s ease forwards, wordGlow 4s 0.4s ease-in-out infinite;
+}
+
+@keyframes wordReveal {
+    0% {
+        filter: brightness(2.5) drop-shadow(0 0 6px var(--gold-light));
+    }
+
+    100% {
+        filter: brightness(1) drop-shadow(0 0 2px var(--gold));
+    }
+}
+
+@keyframes wordGlow {
+
+    0%,
+    100% {
+        text-shadow:
+            0 0 5px rgba(255, 255, 255, 1),
+            0 0 12px rgba(255, 255, 255, 0.9),
+            0 0 25px rgba(255, 255, 255, 0.6),
+            0 0 45px rgba(212, 175, 55, 0.5);
+    }
+
+    50% {
+        text-shadow:
+            0 0 8px rgba(255, 255, 255, 1),
+            0 0 18px rgba(255, 255, 255, 0.95),
+            0 0 35px rgba(255, 255, 255, 0.7),
+            0 0 60px rgba(212, 175, 55, 0.8);
+    }
+}
+
+/* --- BOTONES INFERIORES --- */
+.interactive-footer {
+    margin-top: 4rem;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.interactive-footer.show {
+    opacity: 1;
+}
+
+.footer-row {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.btn-interact {
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid var(--gold);
+    color: var(--black-text);
+    padding: 15px 30px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: var(--text-shadow);
+    -webkit-text-stroke: 0.5px var(--gold);
+    font-weight: 900;
+    letter-spacing: 2px;
+    word-spacing: 4px;
+}
+
+.btn-interact:hover {
+    background: var(--gold);
+    color: #000;
+    box-shadow: 0 0 25px var(--gold), 0 0 50px var(--gold-glow);
+    -webkit-text-stroke: 0;
+}
+
+#countdown {
+    font-size: 1.5rem; /* Aumentado */
+    letter-spacing: 2px;
+    word-spacing: 4px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .invitation-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 3rem 1rem;
+    }
+
+    .card-content {
+        padding: 0 10px;
+    }
+
+    .subtitle {
+        font-size: 3rem;
+    }
+
+    .main-title {
+        font-size: 1.8rem;
+    }
+
+    .label-gold {
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        word-spacing: 5px;
+    }
+
+    .phrase {
+        font-size: 1rem;
+    }
+
+    .hw-word.visible {
+        font-size: 1.2rem;
+    }
+
+    .date-large {
+        font-size: 2rem;
+    }
+}
